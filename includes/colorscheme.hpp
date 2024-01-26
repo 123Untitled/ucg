@@ -11,6 +11,8 @@
 #include "hex.hpp"
 
 
+// -- U C G  N A M E S P A C E ------------------------------------------------
+
 namespace ucg {
 
 	enum colortype : unsigned char {
@@ -104,6 +106,12 @@ namespace ucg {
 			}
 
 
+			static inline auto print(const ucg::colorscheme& scheme) -> void {
+
+				for (const auto& color : scheme._colors)
+					color.print();
+
+			}
 
 
 
@@ -138,7 +146,6 @@ namespace ucg {
 
 	};
 
-}
+} // namespace ucg
 
-
-#endif
+#endif // UCG_COLORSCHEME_HPP

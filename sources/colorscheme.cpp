@@ -23,7 +23,7 @@ auto ucg::colorscheme::best_hue(void) const -> double {
 	const double dst[3] = { (d1 + d3), (d2 + d1), (d3 + d2) };
 
 	return dst[0] < dst[1] ?
-		(dst[0] < dst[2] ? _hues[0] : _hues[2])
+		  (dst[0] < dst[2] ? _hues[0] : _hues[2])
 		: (dst[1] < dst[2] ? _hues[1] : _hues[2]);
 }
 
@@ -104,9 +104,6 @@ static auto random(double min, double max) -> double {
 
 
 
-
-
-
 auto ucg::colorscheme::generate(void) -> void {
 
 	const double luma     = 70.0;
@@ -155,7 +152,6 @@ auto ucg::colorscheme::generate(void) -> void {
 
 		double increment = (max - brightness) / steps;
 
-		//std::cout << hue << " " << saturation << " " << brightness << std::endl;
 		_colors[i] = color::hsb_to_hex(hue, saturation, brightness);
 		//_colors[i] = color::lch_to_hex(brightness * 100, saturation * 100, hue);
 

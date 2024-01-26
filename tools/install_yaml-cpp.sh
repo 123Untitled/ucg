@@ -57,42 +57,83 @@ if [ -d $REPO_PATH ]; then
 	rm -rf $REPO_PATH
 fi
 
-echo '\x1b[1;34m'
 # clone repo
 if ! git clone -v $REPO_URL $REPO_PATH; then
 	echo 'error: failed to clone repo :('
 	echo '\x1b[0m'
 	exit 1
 fi
-echo '\x1b[0m'
 
 
 # -- I N S T A L L ------------------------------------------------------------
 
+function install() {
 
-mkdir -p $INSTALL_PATH $REPO_PATH'/build'
-cd $REPO_PATH'/build'
+	mkdir -p $INSTALL_PATH $REPO_PATH'/build' &> /dev/null
+	cd $REPO_PATH'/build'
 
 
-if ! cmake .. $BUILD_OPTIONS -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DYAML_BUILD_SHARED_LIBS=OFF; then
-	echo 'error: could not configure yaml-cpp :('
-	exit 1
-fi
+	if ! cmake .. $BUILD_OPTIONS -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DYAML_BUILD_SHARED_LIBS=OFF &> /dev/null; then
+		echo 'error: could not configure yaml-cpp :('
+		cd ../..
+		rm -rf $REPO_PATH
+		exit 1
+	fi
 
-if ! $BUILD_SYSTEM; then
-	echo 'error: could not build yaml-cpp :('
-	exit 1
-fi
+	if ! $BUILD_SYSTEM &> /dev/null; then
+		echo 'error: could not build yaml-cpp :('
+		cd '../..'
+		rm -rf $REPO_PATH
+		exit 1
+	fi
 
-if ! $BUILD_SYSTEM install; then
-	echo 'error: could not install yaml-cpp :('
-	exit 1
-fi
+	if ! $BUILD_SYSTEM install &> /dev/null; then
+		echo 'error: could not install yaml-cpp :('
+		cd '../..'
+		rm -rf $REPO_PATH
+		exit 1
+	fi
 
-cd '../..'
+	cd '../..'
+	rm -rf $REPO_PATH
 
-rm -rf $REPO_PATH
+	exit 0
+}
 
-echo 'yaml-cpp installed successfully :)'
+function animation() {
+
+	local PID=$1
+	local SYMBOLS=('|' '/' '-' '\')
+	local I=1
+	# no cursor
+	echo -n '\x1b[?25l'
+	# color
+	echo -n '\x1b[32m'
+
+	while kill -0 $PID &> /dev/null; do
+
+		I=$((I == 4 ? 1 : I + 1))
+		echo -n '['$SYMBOLS[$I]']\r'
+		sleep 0.1
+	done
+
+	# cursor on
+	echo -n '\x1b[?25h\r'
+
+	# get exit code
+	wait $PID
+	if [ $? -ne 0 ]; then
+		echo '[x] error: failed to install yaml-cpp :('
+		echo -n '\x1b[0m'
+		exit 1
+	fi
+
+	echo '[*] yaml-cpp installed successfully :)'
+	echo -n '\x1b[0m'
+}
+
+# launch install
+install & animation $!
+
 
 

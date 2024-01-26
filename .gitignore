@@ -1,5 +1,6 @@
 external/
 old_ucg/
+build/
 **/.cache/
 **/compile_commands.json
 **/ucg

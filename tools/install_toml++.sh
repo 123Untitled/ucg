@@ -36,14 +36,12 @@ if [ -d $REPO_PATH ]; then
 	rm -rf $REPO_PATH
 fi
 
-echo '\x1b[1;34m'
 # clone repo
 if ! git clone -v $REPO_URL $REPO_PATH; then
 	echo 'error: failed to clone repo :('
 	echo '\x1b[0m'
 	exit 1
 fi
-echo '\x1b[0m'
 
 
 # -- I N S T A L L ------------------------------------------------------------
@@ -54,4 +52,7 @@ cp -r $REPO_PATH'/include/toml++' $INSTALL_PATH
 
 rm -rf $REPO_PATH
 
-echo 'toml++ installed successfully :)'
+# color
+echo -n '\x1b[32m'
+echo '[*] toml++ installed successfully :)\n'
+echo -n '\x1b[0m'

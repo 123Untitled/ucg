@@ -43,14 +43,6 @@ auto color::hsl_to_hex(double hue, double saturation, double lightness) -> color
 	g = static_cast<unsigned char>(255 * hue_to_rgb(v1, v2, hue));
 	b = static_cast<unsigned char>(255 * hue_to_rgb(v1, v2, hue - (1.0 / 3)));
 
-	char buffer[256];
-
-	int size = snprintf(buffer, sizeof(buffer),
-			"\x1b[48;2;%d;%d;%dm\x1b[38;2;%d;%d;%dmcolor\x1b[0m",
-			r, g, b, r, g, b);
-
-	if (size > 0) ::write(1, buffer, static_cast<size_t>(size));
-
 	return color::hex{r, g, b};
 }
 
