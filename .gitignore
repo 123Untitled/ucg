@@ -1,0 +1,7 @@
+external/
+**/.cache/
+**/compile_commands.json
+**/ucg
+**/*.d
+**/*.o
+**/.DS_Store
