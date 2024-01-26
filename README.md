@@ -1,2 +1,7 @@
 
-# 🦄🌈unified colorscheme generator
+# 🌈 unified colorscheme generator
+
+## 📦 Build
+```bash
+make
+```
