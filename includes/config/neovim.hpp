@@ -442,6 +442,117 @@ namespace config {
 				add("TelescopePromptCounter", cs::A2(scheme), "NONE", "NONE");
 
 
+				// nvim-tree
+
+				// normal text
+				link("NvimTreeNormal") = key("Comment");
+				// normal text in floating windows.
+				link("NvimTreeNormalFloat") = key("NormalFloat");
+				// normal text in non-current windows.
+				link("NvimTreeNormalNC") = key("Comment");
+
+				link("NvimTreeLineNr") = key("LineNr");
+
+				link("NvimTreeWinSeparator") = key("WinSeparator");
+				link("NvimTreeEndOfBuffer") = key("EndOfBuffer");
+				link("NvimTreePopup") = key("NormalFloat");
+				link("NvimTreeSignColumn") = key("SignColumn");
+				link("NvimTreeCursorColumn") = key("CursorColumn");
+				link("NvimTreeCursorLine") = key("CursorLine");
+				link("NvimTreeCursorLineNr") = key("CursorLineNr");
+				link("NvimTreeStatusLine") = key("StatusLine");
+				link("NvimTreeStatusLineNC") = key("StatusLineNC");
+
+				link("NvimTreeSymlink") = key("Special");
+				link("NvimTreeExecFile") = key("Type");
+				add("NvimTreeOpenedFile", cs::G7(scheme), "NONE",         "NONE");
+				link("NvimTreeModifiedFile") = key("DiffChange");
+				link("NvimTreeSpecialFile") = key("String");
+				link("NvimTreeImageFile") = key("Constant");
+
+				link("NvimTreeFolderName")        = key("Directory");
+				link("NvimTreeEmptyFolderName")   = key("Comment");
+				link("NvimTreeOpenedFolderName")  = key("Type");
+				link("NvimTreeSymlinkFolderName") = key("NvimTreeSymlink");
+				link("NvimTreeRootFolder")        = key("NvimTreeFolderName");
+ 
+				link("NvimTreeFileIcon") = key("NvimTreeNormal");
+				link("NvimTreeOpenedFileIcon") = key("NvimTreeOpenedFile");
+				link("NvimTreeSymlinkIcon") = key("NvimTreeSymlink");
+				link("NvimTreeFolderIcon") = key("NvimTreeFolderName");
+				link("NvimTreeOpenedFolderIcon") = key("NvimTreeOpenedFolderName");
+				link("NvimTreeClosedFolderIcon") = key("NvimTreeFolderName");
+				link("NvimTreeFolderArrowClosed") = key("NvimTreeFolderName");
+				link("NvimTreeFolderArrowOpen") = key("NvimTreeOpenedFolderName");
+
+
+				link("NvimTreeIndentMarker") = key("NvimTreeNormal");
+// 
+// 
+//Clipboard:  
+//    NvimTreeCopiedHL            SpellRare
+//    NvimTreeCutHL               SpellBad
+// 
+//Bookmark Icon:  
+//    NvimTreeBookmark
+// 
+//Bookmark Highlight:  
+//    NvimTreeBookmarkHL          SpellLocal
+// 
+//Picker:  
+//    NvimTreeWindowPicker
+// 
+//Live Filter:  
+//    NvimTreeLiveFilterPrefix
+//    NvimTreeLiveFilterValue
+// 
+//Git Icon:  
+//    NvimTreeGitDirty
+//    NvimTreeGitStaged
+//    NvimTreeGitMerge
+//    NvimTreeGitRenamed
+//    NvimTreeGitNew
+//    NvimTreeGitDeleted
+//    NvimTreeGitIgnored                  Comment
+// 
+//Git File Text:  
+//    NvimTreeFileDirty                   NvimTreeGitDirty
+//    NvimTreeFileStaged                  NvimTreeGitStaged
+//    NvimTreeFileMerge                   NvimTreeGitMerge
+//    NvimTreeFileRenamed                 NvimTreeGitRenamed
+//    NvimTreeFileNew                     NvimTreeGitNew
+//    NvimTreeFileDeleted                 NvimTreeGitDeleted
+//    NvimTreeFileIgnored                 NvimTreeGitIgnored
+// 
+//Git Folder Text:  
+//    NvimTreeFolderDirty                 NvimTreeFileDirty
+//    NvimTreeFolderStaged                NvimTreeFileStaged
+//    NvimTreeFolderMerge                 NvimTreeFileMerge
+//    NvimTreeFolderRenamed               NvimTreeFileRenamed
+//    NvimTreeFolderNew                   NvimTreeFileNew
+//    NvimTreeFolderDeleted               NvimTreeFileDeleted
+//    NvimTreeFolderIgnored               NvimTreeFileIgnored
+// 
+//Diagnostics Icon:  
+//    NvimTreeLspDiagnosticsError             DiagnosticError
+//    NvimTreeLspDiagnosticsWarning           DiagnosticWarn
+//    NvimTreeLspDiagnosticsInformation       DiagnosticInfo
+//    NvimTreeLspDiagnosticsHint              DiagnosticHint
+// 
+//Diagnostics File Text:  
+//    NvimTreeLspDiagnosticsErrorText         NvimTreeLspDiagnosticsError
+//    NvimTreeLspDiagnosticsWarningText       NvimTreeLspDiagnosticsWarning
+//    NvimTreeLspDiagnosticsInfoText          NvimTreeLspDiagnosticsInformation
+//    NvimTreeLspDiagnosticsHintText          NvimTreeLspDiagnosticsHint
+// 
+//Diagnostics Folder Text:  
+//    NvimTreeLspDiagnosticsErrorFolderText   NvimTreeLspDiagnosticsErrorText
+//    NvimTreeLspDiagnosticsWarningFolderText NvimTreeLspDiagnosticsWarningText
+//    NvimTreeLspDiagnosticsInfoFolderText    NvimTreeLspDiagnosticsInfoText
+//    NvimTreeLspDiagnosticsHintFolderText    NvimTreeLspDiagnosticsHintText
+
+
+
 			}
 
 			neovim(const neovim&) = delete;
