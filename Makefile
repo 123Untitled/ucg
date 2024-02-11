@@ -239,6 +239,16 @@ endef
 .PHONY: all clean fclean re ascii obj exec
 
 
+define install
+if [ -n "$${MYBIN+x}" ]; then
+	cp $(1) "$$MYBIN"
+	echo 'copy' $(1) 'to' "$$MYBIN"
+else
+	echo '$$MYBIN is not defined.'
+fi
+endef
+
+
 
 # -- M A I N  T A R G E T S ---------------------------------------------------
 
@@ -246,7 +256,7 @@ all: ascii $(TOML++_DIR) $(YAML-CPP_DIR) obj $(EXEC) $(COMPILE_COMMANDS)
 	$(call LINES)
 	$(call COLOR,"done ◝(ᵔᵕᵔ)◜")
 	echo
-	cp $(EXEC) '/Users/untitled/Desktop/code/bin/'
+	$(call install, $(EXEC))
 
 
 # -- E X E C U T A B L E ------------------------------------------------------
