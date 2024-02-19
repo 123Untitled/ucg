@@ -60,14 +60,14 @@ int main(int ac, char** av) {
 		}
 	}
 
-	auto alacritty_yaml = ::search(".config/", "alacritty.ya?ml");
+	//auto alacritty_yaml = ::search(".config/", "alacritty.ya?ml");
 	auto alacritty_toml = ::search(".config/", "alacritty.to?ml");
 	auto neovim_scheme  = ::search(".config/", "ucg.vim");
 
-	if (alacritty_yaml == std::nullopt) {
-		std::cout << "alacritty config not found" << std::endl;
-		return EXIT_FAILURE;
-	}
+	//if (alacritty_yaml == std::nullopt) {
+	//	std::cout << "alacritty config not found" << std::endl;
+	//	return EXIT_FAILURE;
+	//}
 	if (alacritty_toml == std::nullopt) {
 		std::cout << "alacritty config not found" << std::endl;
 		return EXIT_FAILURE;
@@ -77,7 +77,7 @@ int main(int ac, char** av) {
 		return EXIT_FAILURE;
 	}
 
-	config::alacritty<config::type::YAML>::run(*alacritty_yaml, scheme);
+	//config::alacritty<config::type::YAML>::run(*alacritty_yaml, scheme);
 	config::alacritty<config::type::TOML>::run(*alacritty_toml, scheme);
 
 	config::neovim vim{*neovim_scheme, scheme};
