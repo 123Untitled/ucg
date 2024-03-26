@@ -4,8 +4,14 @@
 #include <filesystem>
 #include <regex>
 
-#include "alacritty.hpp"
-#include "neovim.hpp"
+#include "config/alacritty.hpp"
+#include "config/neovim.hpp"
+
+
+template <decltype(sizeof(0)) N>
+auto error(const char (&msg)[N]) -> ::ssize_t {
+	return ::write(STDERR_FILENO, msg, N);
+}
 
 
 auto search(const std::string& dir, const std::string& reg) -> std::optional<std::string> {
@@ -48,9 +54,10 @@ auto search(const std::string& dir, const std::string& reg) -> std::optional<std
 int main(int ac, char** av) {
 
 	ucg::colorscheme scheme{};
-	if (ac == 1) {
+
+	if (ac == 1)
 		ucg::colorscheme::print(scheme);
-	}
+
 	else {
 		if (std::string_view{av[1]} == "-s" || std::string_view{av[1]} == "--silent")
 			;
@@ -69,11 +76,11 @@ int main(int ac, char** av) {
 	//	return EXIT_FAILURE;
 	//}
 	if (alacritty_toml == std::nullopt) {
-		std::cout << "alacritty config not found" << std::endl;
+		error("alacritty config not found\n");
 		return EXIT_FAILURE;
 	}
 	if (neovim_scheme == std::nullopt) {
-		std::cout << "vim scheme not found" << std::endl;
+		error("vim scheme not found\n");
 		return EXIT_FAILURE;
 	}
 

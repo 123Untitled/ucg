@@ -1,4 +1,4 @@
-#include "hsl.hpp"
+#include "conversion/hsl.hpp"
 
 static auto hue_to_rgb(double v1, double v2, double vh) -> double {
 	if (vh < 0) vh += 1;

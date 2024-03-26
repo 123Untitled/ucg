@@ -27,6 +27,16 @@ namespace config {
 
 				public:
 
+					// -- public types ----------------------------------------
+
+					/* self type */
+					using self = config::neovim::highlight;
+
+
+					// -- public lifecycle ------------------------------------
+
+
+					/* default constructor */
 					inline constexpr highlight(void)
 					: _foreground{}, _background{}, _style{} {}
 
@@ -52,35 +62,19 @@ namespace config {
 
 
 					/* copy constructor */
-					inline constexpr highlight(const highlight& other) noexcept
-					:	_foreground{other._foreground},
-						_background{other._background},
-						_style{other._style} {}
+					inline constexpr highlight(const self&) = default;
 
 					/* move constructor */
-					inline constexpr highlight(highlight&& other) noexcept
-					:	_foreground{std::move(other._foreground)},
-						_background{std::move(other._background)},
-						_style{std::move(other._style)} {}
+					inline constexpr highlight(self&& other) noexcept = default;
 
 
 					// -- public assignment operators -----------------------------
 
 					/* copy assignment operator */
-					inline auto operator=(const highlight& other) noexcept -> highlight& {
-						_foreground = other._foreground;
-						_background = other._background;
-							_style = other._style;
-						return *this;
-					}
+					inline auto operator=(const self& other) -> self& = default;
 
 					/* move assignment operator */
-					inline auto operator=(highlight&& other) noexcept -> highlight& {
-						_foreground = std::move(other._foreground);
-						_background = std::move(other._background);
-							_style = std::move(other._style);
-						return *this;
-					}
+					inline auto operator=(self&& other) noexcept -> self& = default;
 
 
 					// -- public accessors ------------------------------------
@@ -309,8 +303,8 @@ namespace config {
 				add("@string.escape",   "SpecialChar");
 				add("@string.special",  "SpecialChar");
 
-				add("character",        "Character");
-				add("character.special","SpecialChar");
+				add("@character",        "Character");
+				add("@character.special","SpecialChar");
 
 				add("@number",          "Number");
 				add("@boolean",         "Number");

@@ -6,8 +6,8 @@
 #include <cmath>
 #include <algorithm>
 
-#include "lch.hpp"
-#include "hsb.hpp"
+#include "conversion/lch.hpp"
+#include "conversion/hsb.hpp"
 #include "hex.hpp"
 
 

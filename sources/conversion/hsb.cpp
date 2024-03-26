@@ -1,4 +1,4 @@
-#include "hsb.hpp"
+#include "conversion/hsb.hpp"
 
 
 auto color::hsb_to_hex(double hue, double saturation, double brightness) -> color::hex {
