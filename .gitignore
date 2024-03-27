@@ -1,10 +1,7 @@
-/external
 /.cache
 /compile_commands.json
 /ucg
-
-/sources/**/*.d
-/sources/**/*.o
-/sources/**/*.json
-
 .DS_Store
+
+
+/.build
