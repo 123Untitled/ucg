@@ -3,8 +3,8 @@
 
 #include "colorscheme.hpp"
 
-#include "yaml-cpp/yaml.h"
-#include "toml++/toml.hpp"
+#include <yaml-cpp/yaml.h>
+#include <toml++/toml.hpp>
 
 #include <fstream>
 #include <iostream>
