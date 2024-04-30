@@ -7,6 +7,11 @@
 #include "config/alacritty.hpp"
 #include "config/neovim.hpp"
 
+#include "config.hpp"
+#include "memory/memory.hpp"
+
+#include "toml/parser.hpp"
+
 
 template <decltype(sizeof(0)) N>
 auto error(const char (&msg)[N]) -> ::ssize_t {
@@ -52,6 +57,44 @@ auto search(const std::string& dir, const std::string& reg) -> std::optional<std
 
 
 int main(int ac, char** av) {
+
+		
+
+	// toml parser: Control characters other than tab (U+0000 to U+0008, U+000A to U+001F, U+007F) are not permitted in comments.
+
+	// mean: null to backspace, newline to unit separator, delete
+
+
+	// U+0000 to U+0008, U+000A to U+001F, U+007F
+
+	//ucg::toml_parser parser{"/Users/untitled/.config/ucg/ucg.toml"};
+
+	//return 0;
+
+
+
+
+
+
+
+	/*
+	try {
+
+		//ucg::memory<1>::allocate<int>(5);
+
+		ucg::config::targets();
+
+	} catch (const std::exception& e) {
+		
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
+	}
+
+
+	return 0;
+	*/
+
+
 
 	ucg::colorscheme scheme{};
 

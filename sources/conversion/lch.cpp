@@ -76,5 +76,6 @@ auto color::lch_to_hex( const double lightness,
 					  clamp(g * 255),
 					  clamp(b * 255)};
 
+
 	#undef clamp
 }

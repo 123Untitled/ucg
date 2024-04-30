@@ -1,0 +1,18 @@
+
+[configs]
+	path = '~/.config/ucg'
+	env_var = 'UCG_CONFIG'
+
+[schemes]
+	path = '~/.local/share/ucg/schemes'
+	env_var = 'UCG_SCHEMES'
+
+[targets]
+	enabled = ['alacritty', 'nvim', 'gnome-terminal', 'bat']
+
+[colors]
+	type       = ['light', 'dark']
+	algorithms = ['wal', 'pywal', 'wpgtk', 'random']
+	contrast   = [65, 88]
+	lightness  = [70, 91]
+	hue        = [[120, 240], [280, 349]]

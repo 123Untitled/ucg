@@ -42,9 +42,10 @@ FetchContent_MakeAvailable(tomlplusplus yaml-cpp)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror \
 										-Wpedantic -Weffc++ \
-										-O0 -g3 \
 										-Wno-unused -Wno-unused-variable \
 										-Wno-unused-parameter -Wno-unused-private-field \
 										-Wno-unused-local-typedef -Wno-unused-function \
@@ -52,9 +53,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror \
 										-Wconversion -Wsign-conversion -Wfloat-conversion \
 										-Wnarrowing")
 
+# set the build type
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+
 
 # source files
-file(GLOB_RECURSE SOURCES "sources/*.cpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "sources/*.cpp")
 
 # include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
@@ -64,6 +71,10 @@ include_directories(${yaml-cpp_SOURCE_DIR}/include)
 # add the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+target_compile_options(${PROJECT_NAME} PRIVATE
+	$<$<CONFIG:Debug>:-Og -g3 -DDEBUG>
+	$<$<CONFIG:Release>:-O3 -g0>
+)
 
 # install path
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
