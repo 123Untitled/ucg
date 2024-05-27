@@ -54,7 +54,7 @@ ucg::toml_parser::toml_parser(const char* const path)
 : _path{path}, _buffer{nullptr}, _size{0U} {
 
 
-	auto fd = ::open(path, O_RDONLY | O_NONBLOCK | O_SYMLINK);
+	auto fd = ::open(path, O_RDONLY | O_NONBLOCK);
 
 	if (fd == -1)
 		throw std::runtime_error("toml_parser: open failed");
@@ -76,7 +76,7 @@ ucg::toml_parser::toml_parser(const char* const path)
 	_size = static_cast<size_type>(st.st_size);
 
 	// allocate buffer
-	_buffer = static_cast<char*>(__builtin_malloc(_size));
+	_buffer = static_cast<char*>(malloc(_size));
 
 	// check buffer
 	if (_buffer == nullptr)
@@ -110,7 +110,7 @@ ucg::toml_parser::toml_parser(const char* const path)
 
 	}
 
-	__builtin_free(_buffer);
+	free(_buffer);
 
 }
 
@@ -351,7 +351,7 @@ auto ucg::toml_parser::token_list::operator=(token_list&& other) noexcept -> tok
 /* push */
 auto ucg::toml_parser::token_list::push(const char* data, size_type size, token_type type) -> void {
 	// allocate new token
-	*_next = static_cast<token*>(__builtin_malloc(sizeof(token)));
+	*_next = static_cast<token*>(malloc(sizeof(token)));
 	// check token
 	if (*_next == nullptr)
 		throw std::runtime_error("toml_parser: malloc failed");
@@ -373,7 +373,7 @@ auto ucg::toml_parser::token_list::_free(void) noexcept -> void {
 		// get next token
 		auto next = current->next;
 		// free token
-		__builtin_free(current);
+		free(current);
 		// move to next token
 		current = next; }
 }
