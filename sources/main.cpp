@@ -58,7 +58,33 @@ auto search(const std::string& dir, const std::string& reg) -> std::optional<std
 
 int main(int ac, char** av) {
 
-		
+
+	// TO REMOVE, JUSTE HERE FOR GENERATE GRADIENT FOR ANOTHER PROJECT
+	double hue = 180;
+
+	const int fd = open("/Users/untitled/Desktop/code/projects/https_server/server/include/gradient.hpp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1) {
+		std::cerr << "error: " << std::strerror(errno) << std::endl;
+		return EXIT_FAILURE;
+	}
+
+	write(fd, "static ws::array _colors {\n", 27);
+
+	while (hue < 360) {
+		color::hex c = color::lch_to_hex(78, 58, hue);
+		const auto e = c.escape();
+		std::cout << e << std::endl;
+		::write(fd, "\t\"", 2);
+		::write(fd, e.data(), e.size());
+		::write(fd, "\",\n", 3);
+		++hue;
+	}
+	::write(fd, "};\n", 3);
+	::close(fd);
+	return 0;
+	// END REMOVE
+
+
 
 	// toml parser: Control characters other than tab (U+0000 to U+0008, U+000A to U+001F, U+007F) are not permitted in comments.
 
