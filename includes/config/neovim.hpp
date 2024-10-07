@@ -134,10 +134,10 @@ namespace config {
 
 
 				// normal text
-				add("Normal",          cs::G7(scheme), cs::G1(scheme), "NONE");
+				add("Normal",          cs::G7(scheme), "NONE"/*cs::G1(scheme)*/, "NONE");
 
 				// normal text in non-current windows.
-				add("NormalNC",        cs::G7(scheme), cs::G1(scheme), "NONE");
+				add("NormalNC",        cs::G7(scheme), "NONE"/*cs::G1(scheme)*/, "NONE");
 
 				// titles for output from ":set all", ":autocmd" etc.
 				add("Title",           cs::C1(scheme), "NONE",         "NONE");
