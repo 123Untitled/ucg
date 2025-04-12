@@ -1,4 +1,5 @@
 #include "colorscheme.hpp"
+#include "contrast.hpp"
 
 ucg::colorscheme::colorscheme(void)
 : _colors{}, _hues{} {
@@ -108,11 +109,11 @@ auto ucg::colorscheme::generate(void) -> void {
 
 	const double luma     = 70.0;
 	const double chroma   = 60.0;
-	double contrast = 15.0;
+	double contrast = 17.0;
 
-	this->random_hues();
+	//this->random_hues();
 	//this->triad_hue();
-	//this->tetrad_hue();
+	this->tetrad_hue();
 	//this->analogous_hue(70);
 	//this->golden_ratio_hue();
 
@@ -135,29 +136,46 @@ auto ucg::colorscheme::generate(void) -> void {
 
 
 	contrast = random(55, 85);
+	//contrast = 100;
+	std::cout << "contrast: " << contrast << std::endl;
 
-	const double min = 0.5 - contrast / 200;
-	const double max = 0.86;
+	ucg::contrast_range range{contrast};
+
+	//const double min = 0.5 - contrast / 200;
+	//const double max = 0.86;
 	//const double max = 0.5 + contrast / 200;
-	double saturation = 0.10;
 
-	const double increment = (max - min) / (6);
+	//std::cout << "min: " << min << std::endl;
+	//std::cout << "max: " << max << std::endl;
+	double saturation = 0.20;
 
+	//const double increment = (max - min) / (6);
+	const double increment = (range.max() - range.min()) / (6);
+
+	std::cout << "increment: " << increment << std::endl;
 
 	std::size_t s = 0;
-	double brightness = min;
+	//double brightness = min;
+	double brightness = range.min();
 	double steps = 6;
 
 	for (std::size_t i = colortype::G1; i <= colortype::G7; ++i) {
+		//std::cout << "brightness: " << brightness << std::endl;
 
-		double increment = (max - brightness) / steps;
 
-		_colors[i] = color::hsb_to_hex(hue, saturation, brightness);
+		//_colors[i] = ucg::hsb_to_hex2(hue, saturation, brightness);
+		 _colors[i] = ucg::hsb_to_hex(hue, saturation, brightness);
+		//saturation -= 0.05;
 		//_colors[i] = color::lch_to_hex(brightness * 100, saturation * 100, hue);
 
+
+		//double inc = (max - brightness) / steps;
+		double inc = (range.max() - brightness) / steps;
+		//std::cout << "      inc: " << inc << std::endl << std::endl;
+
 		brightness += increment;
+		//brightness += inc;
 		--steps;
 	}
-
 }
 

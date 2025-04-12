@@ -3,7 +3,7 @@
 
 #include "colorscheme.hpp"
 
-#include <yaml-cpp/yaml.h>
+//#include <yaml-cpp/yaml.h>
 #include <toml++/toml.hpp>
 
 #include <fstream>
@@ -80,63 +80,63 @@ namespace config {
 			// -- private types -----------------------------------------------
 
 			/* underlying type */
-			using underlying = std::conditional_t<T == type::YAML,
+			using underlying = toml::table;/*std::conditional_t<T == type::YAML,
 												  YAML::Node,
-												  toml::table>;
+												  toml::table>*/
 
 			// -- private lifecycle -------------------------------------------
 
 			/* path and colorscheme constructor (yaml) */
-			alacritty(const std::string& path,
-					  const ucg::colorscheme& scheme) requires (T == type::YAML)
-			: _config{} {
-
-				try {
-					_config = YAML::LoadFile(path);
-
-					YAML::Node colors  = _config["colors"];
-
-					YAML::Node primary = colors["primary"];
-
-					primary["background"] = scheme.get<ucg::colortype::G1>().data();
-					primary["foreground"] = scheme.get<ucg::colortype::G7>().data();
-
-					YAML::Node normal  = colors["normal"];
-
-					normal["black"  ] = scheme.get<ucg::colortype::G1>().data();
-					normal["red"    ] = scheme.get<ucg::colortype::A2>().data();
-					normal["green"  ] = scheme.get<ucg::colortype::B2>().data();
-					normal["yellow" ] = scheme.get<ucg::colortype::C2>().data();
-					normal["blue"   ] = scheme.get<ucg::colortype::A1>().data();
-					normal["magenta"] = scheme.get<ucg::colortype::B1>().data();
-					normal["cyan"   ] = scheme.get<ucg::colortype::C1>().data();
-					normal["white"  ] = scheme.get<ucg::colortype::G7>().data();
-
-					YAML::Node bright  = colors["bright"];
-
-					bright["black"  ] = scheme.get<ucg::colortype::G2>().data();
-					bright["red"    ] = scheme.get<ucg::colortype::G3>().data();
-					bright["green"  ] = scheme.get<ucg::colortype::G4>().data();
-					bright["yellow" ] = scheme.get<ucg::colortype::G5>().data();
-					bright["blue"   ] = scheme.get<ucg::colortype::G6>().data();
-					bright["magenta"] = scheme.get<ucg::colortype::A3>().data();
-					bright["cyan"   ] = scheme.get<ucg::colortype::B3>().data();
-					bright["white"  ] = scheme.get<ucg::colortype::C3>().data();
-
-
-					std::ofstream file{path};
-
-					if (file.is_open()) {
-						file << _config;
-						file.close();
-					}
-
-				}
-				catch (const YAML::Exception& e) {
-					std::cerr << "error: " << e.what() << std::endl;
-				}
-
-			}
+			//alacritty(const std::string& path,
+			//		  const ucg::colorscheme& scheme) requires (T == type::YAML)
+			//: _config{} {
+			//
+			//	try {
+			//		_config = YAML::LoadFile(path);
+			//
+			//		YAML::Node colors  = _config["colors"];
+			//
+			//		YAML::Node primary = colors["primary"];
+			//
+			//		primary["background"] = scheme.get<ucg::colortype::G1>().data();
+			//		primary["foreground"] = scheme.get<ucg::colortype::G7>().data();
+			//
+			//		YAML::Node normal  = colors["normal"];
+			//
+			//		normal["black"  ] = scheme.get<ucg::colortype::G1>().data();
+			//		normal["red"    ] = scheme.get<ucg::colortype::A2>().data();
+			//		normal["green"  ] = scheme.get<ucg::colortype::B2>().data();
+			//		normal["yellow" ] = scheme.get<ucg::colortype::C2>().data();
+			//		normal["blue"   ] = scheme.get<ucg::colortype::A1>().data();
+			//		normal["magenta"] = scheme.get<ucg::colortype::B1>().data();
+			//		normal["cyan"   ] = scheme.get<ucg::colortype::C1>().data();
+			//		normal["white"  ] = scheme.get<ucg::colortype::G7>().data();
+			//
+			//		YAML::Node bright  = colors["bright"];
+			//
+			//		bright["black"  ] = scheme.get<ucg::colortype::G2>().data();
+			//		bright["red"    ] = scheme.get<ucg::colortype::G3>().data();
+			//		bright["green"  ] = scheme.get<ucg::colortype::G4>().data();
+			//		bright["yellow" ] = scheme.get<ucg::colortype::G5>().data();
+			//		bright["blue"   ] = scheme.get<ucg::colortype::G6>().data();
+			//		bright["magenta"] = scheme.get<ucg::colortype::A3>().data();
+			//		bright["cyan"   ] = scheme.get<ucg::colortype::B3>().data();
+			//		bright["white"  ] = scheme.get<ucg::colortype::C3>().data();
+			//
+			//
+			//		std::ofstream file{path};
+			//
+			//		if (file.is_open()) {
+			//			file << _config;
+			//			file.close();
+			//		}
+			//
+			//	}
+			//	catch (const YAML::Exception& e) {
+			//		std::cerr << "error: " << e.what() << std::endl;
+			//	}
+			//
+			//}
 
 			/* path and colorscheme constructor (toml) */
 			alacritty(const std::string& path,

@@ -1,6 +1,6 @@
 
 # minimal version
-cmake_minimum_required(VERSION 3.4...3.14)
+cmake_minimum_required(VERSION 2.8...3.14)
 
 # exit if windows
 if(WIN32)

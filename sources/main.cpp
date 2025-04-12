@@ -53,37 +53,109 @@ auto search(const std::string& dir, const std::string& reg) -> std::optional<std
 	return std::nullopt;
 }
 
+#include <pwd.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 
 
-int main(int ac, char** av) {
 
+auto export_scheme(const ucg::colorscheme& scheme) -> void {
 
-	// TO REMOVE, JUSTE HERE FOR GENERATE GRADIENT FOR ANOTHER PROJECT
-	double hue = 180;
+	// check if config directory exists
+	struct ::stat st;
 
-	const int fd = open("/Users/untitled/Desktop/code/projects/https_server/server/include/gradient.hpp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1) {
-		std::cerr << "error: " << std::strerror(errno) << std::endl;
-		return EXIT_FAILURE;
+	// get home
+	struct ::passwd* pw = getpwuid(getuid());
+
+	if (pw == nullptr || pw->pw_dir == nullptr) {
+		error("failed to get home directory\n");
+		return;
 	}
 
-	write(fd, "static ws::array _colors {\n", 27);
+	char home[PATH_MAX];
 
-	while (hue < 360) {
-		color::hex c = color::lch_to_hex(78, 58, hue);
-		const auto e = c.escape();
-		std::cout << e << std::endl;
-		::write(fd, "\t\"", 2);
-		::write(fd, e.data(), e.size());
-		::write(fd, "\",\n", 3);
-		++hue;
+	for (unsigned i = 0U; true; ++i) {
+
+		if (i >= PATH_MAX) {
+			error("home directory too long\n");
+			return;
+		}
+
+		if (pw->pw_dir[i] == '\0') {
+
+			constexpr char prefix[] = "/.config/ucg";
+
+			if (i + sizeof(prefix) > PATH_MAX) {
+				error("home directory too long\n");
+				return;
+			}
+
+			__builtin_memcpy(home + i, prefix, sizeof(prefix));
+			break;
+		}
+
+		home[i] = pw->pw_dir[i];
 	}
-	::write(fd, "};\n", 3);
-	::close(fd);
-	return 0;
-	// END REMOVE
 
+
+
+
+	if (::stat(home, &st) == -1) {
+
+		if (errno != ENOENT) {
+			error("failed to get config directory\n");
+			return;
+		}
+
+		// create directory
+		if (::mkdir(home, 0755) == -1) {
+			error("failed to create config directory\n");
+			return;
+		}
+
+		error("config directory not found\n");
+		return;
+	}
+
+	if (S_ISDIR(st.st_mode) == false) {
+		error("config directory is not a directory\n");
+	}
+
+
+
+}
+
+
+
+auto main(int ac, char** av) -> int {
+
+	//ucg::hsb_to_hex(285.111, 0.0, 1.0);
+	//
+	//
+	//return 0;
+
+	//double d = 1.0;
+	//
+	//unsigned int b = static_cast<unsigned int>(d * 255.0);
+	//
+	//std::cout << "b: " << b << std::endl;
+	//return 0;
+
+
+
+
+	//double h = 210.0f; // teinte (ex: 0=rouge, 120=vert, 240=bleu)
+ //   double s = 0.0f; // saturation (0 à 1)
+ //   double b = 1.0f;  // luminosité (0 à 1)
+	//
+ //   RGB rgb = hsbToRgb(h, s, b);
+ //   printf("RGB = (%d, %d, %d)\n", rgb.r, rgb.g, rgb.b);
+	//
+ //   return 0;
+
+	//ucg::hsb_to_hex(0.0, 0.5, 1.0);
+	//return 0;
 
 
 	// toml parser: Control characters other than tab (U+0000 to U+0008, U+000A to U+001F, U+007F) are not permitted in comments.
@@ -96,10 +168,6 @@ int main(int ac, char** av) {
 	//ucg::toml_parser parser{"/Users/untitled/.config/ucg/ucg.toml"};
 
 	//return 0;
-
-
-
-
 
 
 
@@ -121,8 +189,8 @@ int main(int ac, char** av) {
 	*/
 
 
-
 	ucg::colorscheme scheme{};
+
 
 	if (ac == 1)
 		ucg::colorscheme::print(scheme);
@@ -135,6 +203,7 @@ int main(int ac, char** av) {
 			return EXIT_FAILURE;
 		}
 	}
+	return 0;
 
 	//auto alacritty_yaml = ::search(".config/", "alacritty.ya?ml");
 	auto alacritty_toml = ::search(".config/", "alacritty.to?ml");

@@ -172,7 +172,7 @@ namespace config {
 				add("lCursor",         "NONE",         "NONE",         "NONE");
 				add("CursorIM",        "NONE",         "NONE",         "NONE");
 
-				add("CursorLine",      "NONE",         cs::G2(scheme), "bold");
+				add("CursorLine",      "NONE",         cs::G2(scheme), "NONE");
 				add("CursorLineNr",    cs::A2(scheme), "NONE",         "NONE");
 				add("CursorColumn",    "CursorLine");
 
@@ -232,6 +232,17 @@ namespace config {
 				add("Menu",            "NONE",        "NONE",          "NONE");
 				add("ScrollBar",       "NONE",        "NONE",          "NONE");
 				add("Tooltip",         "NONE",        "NONE",          "NONE");
+
+
+
+
+
+				//FloatShadow    xxx ctermbg=0 guibg=NvimDarkGrey4 blend=80
+				//FloatShadowThrough xxx ctermbg=0 guibg=NvimDarkGrey4 blend=100
+				//RedrawDebugClear xxx ctermfg=0 ctermbg=11 guibg=NvimDarkYellow
+				//RedrawDebugComposed xxx ctermfg=0 ctermbg=10 guibg=NvimDarkGreen
+				//RedrawDebugRecompose xxx ctermfg=0 ctermbg=9 guibg=NvimDarkRed
+				add("Error", cs::A1(scheme), "NONE",         "NONE");
 
 
 				// -- syntax highlighting -----------------------------------------

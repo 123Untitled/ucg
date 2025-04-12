@@ -1,82 +1,80 @@
 #include "conversion/hsb.hpp"
 
+#include "types.hpp"
 
-auto color::hsb_to_hex(double hue, double saturation, double brightness) -> color::hex {
+#include <cmath>
 
-	hue = std::clamp(hue, 0.0, 360.0);
 
-	unsigned range = static_cast<unsigned>(std::floor(hue / 60));
+namespace ucg {
 
-	double c = brightness * saturation;
-	double x = c * (1 - std::abs(std::fmod(hue / 60, 2) - 1));
+	template <typename T>
+	auto clamp(const T& value, const T& min, const T& max) noexcept -> const T& {
+		return (value < min) ? min : ((value > max) ? max : value);
+	}
+}
 
-	double m = brightness - c;
+auto ucg::hsb_to_hex(double hue, double saturation, double brightness) -> color::hex {
+
+	// clamp values
+	hue        = ucg::clamp(hue,        0.0, 360.0);
+	saturation = ucg::clamp(saturation, 0.0,   1.0);
+	brightness = ucg::clamp(brightness, 0.0,   1.0);
+
+	const unsigned range = static_cast<unsigned>(hue / 60.0);
+
+	const double c = brightness * saturation;
+	const double m = brightness - c;
+
+	const double x = c * (1 - std::abs(std::fmod(hue / 60, 2) - 1));
 
 	double r, g, b;
 
 	switch (range) {
 
-		case 0:
-			r = (c + m) * 255;
-			g = (x + m) * 255;
-			b =  m      * 255;
+		case 0U:
+			r = (c + m);
+			g = (x + m);
+			b =  m     ;
 			break;
-		case 1:
-			r = (x + m) * 255;
-			g = (c + m) * 255;
-			b =  m      * 255;
+		case 1U:
+			r = (x + m);
+			g = (c + m);
+			b =  m     ;
 			break;
-		case 2:
-			r =  m      * 255;
-			g = (c + m) * 255;
-			b = (x + m) * 255;
+		case 2U:
+			r =  m     ;
+			g = (c + m);
+			b = (x + m);
 			break;
-		case 3:
-			r =  m      * 255;
-			g = (x + m) * 255;
-			b = (c + m) * 255;
+		case 3U:
+			r =  m     ;
+			g = (x + m);
+			b = (c + m);
 			break;
-		case 4:
-			r = (x + m) * 255;
-			g =  m      * 255;
-			b = (c + m) * 255;
+		case 4U:
+			r = (x + m);
+			g =  m     ;
+			b = (c + m);
 			break;
-		case 5:
-			r = (c + m) * 255;
-			g =  m      * 255;
-			b = (x + m) * 255;
+		case 5U:
+			r = (c + m);
+			g =  m     ;
+			b = (x + m);
 			break;
 		default:
-			r = 0; g = 0; b = 0;
+			r = 0.0;
+			g = 0.0;
+			b = 0.0;
 			break;
 	}
 
-	uint8_t _r = static_cast<uint8_t>(std::clamp(std::floor(r), 0.0, 255.0));
-	uint8_t _g = static_cast<uint8_t>(std::clamp(std::floor(g), 0.0, 255.0));
-	uint8_t _b = static_cast<uint8_t>(std::clamp(std::floor(b), 0.0, 255.0));
-
-	//char buffer[256];
-	//
-	//int size = snprintf(buffer, sizeof(buffer),
-	//		"\x1b[48;2;%d;%d;%dm                \x1b[0m\n",
-	//		_r, _g, _b);
-	//
-	//if (size > 0) ::write(1, buffer, static_cast<size_t>(size));
+	r *= 255.0;
+	g *= 255.0;
+	b *= 255.0;
 
 	return color::hex{
-		static_cast<uint8_t>(r),
-		static_cast<uint8_t>(g),
-		static_cast<uint8_t>(b)
+		static_cast<ucg::byte>(r + 0.5), // round result
+		static_cast<ucg::byte>(g + 0.5), // round result
+		static_cast<ucg::byte>(b + 0.5)  // round result
 	};
 }
-
-
-
-
-
-
-
-
-
-
-
